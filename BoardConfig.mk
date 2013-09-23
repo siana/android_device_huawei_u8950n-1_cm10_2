@@ -94,6 +94,7 @@ BOARD_HAVE_HUAWEI_AR6k := true
 
 # Audio
 TARGET_PROVIDES_LIBAUDIO := true
+BOARD_QCOM_VOIP_ENABLED := true
 
 # Lights
 TARGET_PROVIDES_LIBLIGHTS := true
@@ -126,7 +127,7 @@ BOARD_USE_QCOM_LLVM_CLANG_RS := true
 # Recovery
 BOARD_HAS_NO_SELECT_BUTTON := true
 TARGET_RECOVERY_INITRC := device/huawei/u8833/recovery/init.rc
-TARGET_RECOVERY_FSTAB := device/huawei/u8833/recovery/etc/recovery.fstab
+TARGET_RECOVERY_FSTAB := device/huawei/u8833/ramdisk/fstab.huawei
 BOARD_HAS_LARGE_FILESYSTEM := true
 BOARD_HAS_NO_MISC_PARTITION := true
 BOARD_USES_MMCUTILS := true
@@ -136,6 +137,7 @@ DEVICE_RESOLUTION := 480x800
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/class/android_usb/android0/f_mass_storage/lun%d/file
 BOARD_USE_CUSTOM_RECOVERY_FONT:= \"roboto_10x18.h\"
 BOARD_CUSTOM_GRAPHICS := ../../../device/huawei/u8833/recovery/graphics.c
+RECOVERY_FSTAB_VERSION := 2
 
 # USB
 BOARD_UMS_LUNFILE := "/sys/class/android_usb/android0/f_mass_storage/lun%d/file"

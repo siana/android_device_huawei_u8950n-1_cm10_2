@@ -1,7 +1,9 @@
-From ea248dbd87906d646b29ce0108676123d30e299e Mon Sep 17 00:00:00 2001
-From: Kra1o5 <kra1o5x@gmail.com>
-Date: Fri, 20 Sep 2013 10:52:21 +0200
-Subject: [PATCH] Fix_wifi_tethering
+From 2c6f71509977e0aa4efbb5a41196fffbd1a29003 Mon Sep 17 00:00:00 2001
+From: josalaito <josalaito@hotmail.es>
+Date: Mon, 23 Sep 2013 16:36:59 +0200
+Subject: [PATCH] Fix wifi thethering
+
+Change-Id: I2cac971aab6b97c7fd2857e6edba4ee4a882b60b
 
 ---
  Android.mk              |  11 +-
@@ -12,39 +14,40 @@ Subject: [PATCH] Fix_wifi_tethering
  create mode 100644 SoftapControllerATH.cpp
 
 diff --git a/Android.mk b/Android.mk
-index 84443d9..9957d3c 100644
+index 1f7ceea..e3eba84 100644
 --- a/Android.mk
 +++ b/Android.mk
-@@ -39,12 +39,19 @@ LOCAL_CFLAGS := -Werror=format
+@@ -40,10 +40,18 @@ LOCAL_SHARED_LIBRARIES := libstlport libsysutils liblog libcutils libnetutils \
+                           libcrypto libhardware_legacy libmdnssd libdl \
+                           liblogwrap
  
- LOCAL_SHARED_LIBRARIES := libstlport libsysutils libcutils libnetutils \
-                           libcrypto libhardware_legacy libmdnssd libdl
+-ifdef USES_TI_MAC80211
+-  LOCAL_SRC_FILES += SoftapControllerTI.cpp
 +ifeq ($(BOARD_HAVE_HUAWEI_AR6k),true)
 +  LOCAL_CFLAGS += -DHUAWEI_ATH
 +  LOCAL_CFLAGS += -DWIFI_MODULE_PATH=\"$(WIFI_DRIVER_MODULE_PATH)\"
 +  LOCAL_C_INCLUDES += external/wpa_supplicant_8/wpa_supplicant/src/common
 +  LOCAL_SRC_FILES += SoftapControllerATH.cpp
 +  LOCAL_SHARED_LIBRARIES := $(LOCAL_SHARED_LIBRARIES) libwpa_client
-+else
- ifdef USES_TI_MAC80211
-   LOCAL_SRC_FILES += SoftapControllerTI.cpp
--else
+ else
+-  LOCAL_SRC_FILES += SoftapController.cpp
++   LOCAL_SRC_FILES += SoftapControllerTI.cpp
 +else 
-   LOCAL_SRC_FILES += SoftapController.cpp
- endif
--
++   LOCAL_SRC_FILES += SoftapController.cpp
 +endif
++
+ endif
+ 
  ifneq ($(BOARD_HOSTAPD_DRIVER),)
-   LOCAL_CFLAGS += -DHAVE_HOSTAPD
-   ifneq ($(BOARD_HOSTAPD_DRIVER_NAME),)
 diff --git a/CommandListener.cpp b/CommandListener.cpp
-index fdb26dd..9725f66 100644
+index 6d38b81..1162157 100644
 --- a/CommandListener.cpp
 +++ b/CommandListener.cpp
-@@ -839,8 +839,17 @@ int CommandListener::SoftapCmd::runCommand(SocketClient *cli,
+@@ -744,8 +744,18 @@ int CommandListener::SoftapCmd::runCommand(SocketClient *cli,
          return 0;
      }
- 
+
++
 +#ifdef HUAWEI_ATH
 +    if (!strcmp(argv[1], "start")) {
 +        rc = sSoftapCtrl->startDriver(argv[2]);
@@ -60,21 +63,17 @@ index fdb26dd..9725f66 100644
          rc = sSoftapCtrl->stopSoftap();
      } else if (!strcmp(argv[1], "fwreload")) {
 diff --git a/SoftapController.h b/SoftapController.h
-index 57241b9..86ed7c7 100644
+index 38ff8ff..88a36c0 100644
 --- a/SoftapController.h
 +++ b/SoftapController.h
-@@ -27,6 +27,10 @@
- #define AP_DRIVER_START_DELAY	800000
+@@ -28,9 +28,17 @@
  
  class SoftapController {
+ public:
 +#ifdef HUAWEI_ATH
 +    char mBuf[SOFTAP_MAX_BUFFER_SIZE];
 +    char mIface[IFNAMSIZ];
 +#endif
-     pid_t mPid;
-     int mSock;
- 
-@@ -36,6 +40,10 @@ public:
      SoftapController();
      virtual ~SoftapController();
  

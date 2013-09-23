@@ -1,6 +1,6 @@
-From d4e29720bc7ad6dc48bf7c202efc63bb798ffc3c Mon Sep 17 00:00:00 2001
-From: Robin Humble <plaguedbypenguins@gmail.com>
-Date: Sat, 20 Apr 2013 23:55:23 +1000
+From 4cf033993674da862d8e064a729ce3fb7746e195 Mon Sep 17 00:00:00 2001
+From: josalaito <josalaito@hotmail.es>
+Date: Mon, 23 Sep 2013 16:10:10 +0200
 Subject: [PATCH] wpa_supplicant: reduce scan timeout to workaround ar6000
  problem
 
