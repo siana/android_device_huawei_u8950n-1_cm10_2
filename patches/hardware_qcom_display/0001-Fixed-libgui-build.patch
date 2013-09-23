@@ -1,0 +1,27 @@
+From 7e84dacbcca4eab3f4043f69c9f62ff14cb9773c Mon Sep 17 00:00:00 2001
+From: josalaito <josalaito@hotmail.es>
+Date: Mon, 23 Sep 2013 22:11:31 +0200
+Subject: [PATCH] Fixed libgui build
+
+Change-Id: I3e938d5dacd51ff3fb4602e8937b03f0e91f2ab2
+---
+ libgralloc/gralloc_priv.h |    3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/libgralloc/gralloc_priv.h b/libgralloc/gralloc_priv.h
+index 7a0d5d3..d8e829d 100644
+--- a/libgralloc/gralloc_priv.h
++++ b/libgralloc/gralloc_priv.h
+@@ -54,6 +54,9 @@ enum {
+      * cannot be used with noncontiguous heaps */
+     GRALLOC_USAGE_PRIVATE_UNCACHED        =       0x02000000,
+ 
++    /* Buffer content should be displayed on an primary display only */
++    GRALLOC_USAGE_PRIVATE_INTERNAL_ONLY = 0x04000000,
++
+     /* Buffer content should be displayed on an external display only */
+     GRALLOC_USAGE_PRIVATE_EXTERNAL_ONLY   =       0x08000000,
+ 
+-- 
+1.7.9.5
+

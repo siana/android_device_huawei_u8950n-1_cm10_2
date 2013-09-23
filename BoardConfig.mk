@@ -99,6 +99,9 @@ BOARD_QCOM_VOIP_ENABLED := true
 # Lights
 TARGET_PROVIDES_LIBLIGHTS := true
 
+# Dalvik
+TARGET_ARCH_LOWMEM := true
+
 # RIL
 BOARD_RIL_CLASS := ../../../device/huawei/u8833/ril/
 
